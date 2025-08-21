@@ -1,8 +1,8 @@
 extends CharacterBody2D
 
 
-@export var health: int = 30;
-@export var max_health: int = 30;
+@export var health: int = 40;
+@export var max_health: int = 40;
 
 @onready var health_bar: ProgressBar = $Health_bar;
 

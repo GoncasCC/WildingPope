@@ -10,9 +10,12 @@ const JUMP_VELOCITY = -400.0
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 
-@export var damage : int = 10;
-
+@export var damage_melee : int = 20;
 @onready var hitbox_melee : Area2D = $HitboxMelee;
+
+@export var projetile_scene : PackedScene;
+@export var damage_ranged : int = 10;
+
 
 func _physics_process(delta):
 	# Add the gravity.
@@ -33,12 +36,32 @@ func _physics_process(delta):
 
 	move_and_slide()
 	
-	# Ataque melee
+	# Melee attack
 	if Input.is_action_just_pressed("ui_melee"):
-		attack();
+		attack_melee();
+		
+	# Ranged attack
+	if Input.is_action_just_pressed("ui_ranged"):
+		attack_ranged();
 		
 		
-func attack() -> void:
+		
+func attack_melee() -> void:
 	for body in hitbox_melee.get_overlapping_bodies():
 		if body.has_method("take_damage"):
-			body.take_damage(damage);
+			body.take_damage(damage_melee);
+			
+func attack_ranged():
+	var proj = projetile_scene.instantiate();
+	get_parent().add_child(proj);
+	
+	#Define projetile direction
+	var dir = Vector2.RIGHT;
+	if velocity.x < 0:
+		dir = Vector2.LEFT;
+	proj.direction = dir;
+	
+	proj.global_position = global_position + (dir * 80);
+	
+		
+	proj.damage = damage_ranged;

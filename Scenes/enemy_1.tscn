@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://djhk5tw8tqugu"]
+[gd_scene load_steps=5 format=3 uid="uid://djhk5tw8tqugu"]
 
 [ext_resource type="Script" path="res://Scripts/enemy_1.gd" id="1_u8nib"]
 
@@ -6,6 +6,9 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_yjo2w"]
 size = Vector2(67, 52)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jvi0d"]
+bg_color = Color(0.65185, 0.972594, 0.139664, 1)
 
 [node name="Enemy1" type="CharacterBody2D"]
 script = ExtResource("1_u8nib")
@@ -24,6 +27,7 @@ offset_left = -34.0
 offset_top = -38.0
 offset_right = 35.0
 offset_bottom = -31.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_jvi0d")
 max_value = 30.0
 value = 30.0
 show_percentage = false
