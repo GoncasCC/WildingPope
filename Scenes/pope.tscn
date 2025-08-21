@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://bw7hij46c5lnk"]
+
+[ext_resource type="Script" path="res://Scripts/pope.gd" id="1_0mec0"]
+[ext_resource type="Texture2D" uid="uid://dnoxhyauce5v6" path="res://icon.svg" id="1_qrwj6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pgseg"]
+size = Vector2(120, 121)
+
+[node name="Pope" type="CharacterBody2D"]
+script = ExtResource("1_0mec0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -0.5)
+shape = SubResource("RectangleShape2D_pgseg")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, 0.5)
+scale = Vector2(1, 1.00781)
+texture = ExtResource("1_qrwj6")
+
+[node name="Camera2D" type="Camera2D" parent="."]

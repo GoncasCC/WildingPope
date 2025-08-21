@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpb2wvls8gmel"]
+
+[ext_resource type="PackedScene" uid="uid://bw7hij46c5lnk" path="res://Scenes/pope.tscn" id="1_xay6r"]
+[ext_resource type="PackedScene" uid="uid://c8ha2prdeuuge" path="res://Scenes/simple_platform.tscn" id="2_heyh8"]
+
+[node name="Game" type="Node2D"]
+
+[node name="SimplePlatform3" parent="." instance=ExtResource("2_heyh8")]
+position = Vector2(695, 452)
+
+[node name="Pope" parent="." instance=ExtResource("1_xay6r")]
+position = Vector2(240, 219)
+
+[node name="SimplePlatform" parent="." instance=ExtResource("2_heyh8")]
+position = Vector2(58, 453)
+
+[node name="SimplePlatform2" parent="." instance=ExtResource("2_heyh8")]
+position = Vector2(-642, 453)
