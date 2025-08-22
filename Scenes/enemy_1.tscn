@@ -31,3 +31,11 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_jvi0d")
 max_value = 30.0
 value = 30.0
 show_percentage = false
+
+[node name="Label_finisher" type="Label" parent="."]
+visible = false
+offset_left = -29.0
+offset_top = -66.0
+offset_right = 26.0
+offset_bottom = -43.0
+text = "Press E"
