@@ -1,0 +1,56 @@
+Roadmap – Protótipo Papa no Inferno
+🎯 Objetivo Geral
+
+Criar 3 níveis curtos que demonstrem:
+✅ Movimento fluido (andar, pular, dash)
+✅ Combate (melee + ranged)
+✅ Vida / dano (player e inimigos)
+✅ Progressão simples (passar nível → próximo círculo)
+
+🔹 Nível 1 – O Tutorial (Entrada do Inferno)
+
+Ambiente: simples, chão plano, algumas plataformas.
+
+Inimigos: 1 tipo básico (ex: demónio que só anda para ti).
+
+Objetivo: Chegar ao fim vivo.
+
+Ensina: andar, saltar, dash, melee, ranged.
+
+Duração: < 1 minuto.
+
+👉 Isto garante que o jogador já domina os controles básicos.
+
+🔹 Nível 2 – O Desafio Inicial (Primeiro Círculo)
+
+Ambiente: mais plataformas, alguns buracos para saltar.
+
+Inimigos:
+
+Demónio básico (igual ao nível 1).
+
+Novo inimigo: projétil (atirador lento).
+
+Objetivo: Chegar até o fim derrotando inimigos.
+
+Duração: ~2 minutos.
+
+Extra: podes colocar um mini-boss (um inimigo mais forte com mais vida).
+
+👉 Aqui o jogador sente que já está a lutar contra algo de verdade.
+
+🔹 Nível 3 – O Boss (Segundo Círculo)
+
+Ambiente: arena fechada (sem saída).
+
+Inimigos: só o Boss.
+
+Tem vida maior.
+
+Ataca com projéteis + melee.
+
+Talvez tenha fase 2 (fica mais rápido quando perde metade da vida).
+
+Objetivo: derrotar o boss para "passar o círculo".
+
+Final: podes fazer um texto simples “O Papa desceu ao próximo círculo do Inferno…”

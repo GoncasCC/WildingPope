@@ -4,6 +4,8 @@ extends CharacterBody2D
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 
+@export var game_over_ui: CanvasLayer
+
 
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -49,8 +51,17 @@ var health: int = 100
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 
+var is_dead : bool = false
+
+
+
+
 
 func _physics_process(delta):
+	
+	#if is_dead:
+	#	await get_tree().create_timer(2).timeout
+	#	get_tree().paused = true
 	var direction = Input.get_axis("ui_left", "ui_right") 
 	
 	if direction > 0:
@@ -99,7 +110,10 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("ui_ranged"):
 		attack_ranged();
 	
-	if is_attacking:
+	
+	if is_dead:
+		pass
+	elif is_attacking:
 		sprite.play("melee")
 	elif is_shooting:
 		sprite.play("shooting")
@@ -209,4 +223,17 @@ func heal(amount: int):
 
 func die():
 	print("Player died")
+	is_dead = true
+	sprite.play("dead")
 	# aqui podes fazer respawn ou game over
+	
+	sprite.animation_finished.connect(_on_death_animation_finished, CONNECT_ONE_SHOT)
+	
+func _on_death_animation_finished():
+	if sprite.animation == "dead":
+		# Espera 2 segundos
+		#await get_tree().create_timer(1).timeout
+		game_over_ui.visible = true
+		game_over_ui.process_mode = Node.PROCESS_MODE_ALWAYS
+		get_tree().paused = true
+	
