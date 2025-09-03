@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bpb2wvls8gmel"]
+[gd_scene load_steps=6 format=3 uid="uid://bpb2wvls8gmel"]
 
 [ext_resource type="PackedScene" uid="uid://bw7hij46c5lnk" path="res://Scenes/pope.tscn" id="1_xay6r"]
 [ext_resource type="PackedScene" uid="uid://c8ha2prdeuuge" path="res://Scenes/simple_platform.tscn" id="2_heyh8"]
 [ext_resource type="PackedScene" uid="uid://djhk5tw8tqugu" path="res://Scenes/enemy_1.tscn" id="3_v83gk"]
 [ext_resource type="PackedScene" uid="uid://bt062021b7qey" path="res://Scenes/projetile.tscn" id="4_036o3"]
+[ext_resource type="PackedScene" uid="uid://v76um7tawsxe" path="res://Scenes/player_hud.tscn" id="5_wowpa"]
 
 [node name="Game" type="Node2D"]
 
@@ -22,3 +23,5 @@ position = Vector2(-642, 453)
 
 [node name="Enemy1" parent="." instance=ExtResource("3_v83gk")]
 position = Vector2(838, 406)
+
+[node name="PlayerHUD" parent="." instance=ExtResource("5_wowpa")]

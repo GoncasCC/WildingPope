@@ -18,61 +18,101 @@ var combo_step: int = 0
 var combo_timer: float = 0.0
 const COMBO_MAX_TIME = 0.5 # max time between combo attacks
 @onready var hitbox_melee : Area2D = $HitboxMelee;
+var is_attacking: bool = false
+var attack_timer: float = 0.0
+const ATTACK_DURATION: float = 0.3 # duração da animação do melee em segundos
 
 
 #Ranged attack
 @export var projetile_scene : PackedScene;
 @export var damage_ranged : int = 10;
+var is_shooting: bool = false
+var shooting_timer: float = 0.0
+const SHOOTING_DURATION: float = 0.3 # duração da animação do melee em segundos
 
 
 #Dash
-@export var dash_speed: float = 600.0
-@export var dash_duration: float = 0.2
+@export var dash_speed: float = 800.0
+@export var dash_duration: float = 0.3
 @export var dash_cooldown: float = 0.5
 var dash_direction: int = 1
 var is_dashing: bool = false
 var dash_time: float = 0.0
 var dash_cd_time: float = 0.0
+var is_invincible: bool = false
+
+
+#Health
+@export var max_health: int = 100
+var health: int = 100
+
+@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 
 
 func _physics_process(delta):
-	# Add the gravity.
-	if not is_on_floor():
-		velocity.y += gravity * delta
+	var direction = Input.get_axis("ui_left", "ui_right") 
+	
+	if direction > 0:
+		sprite.flip_h = false
+	elif direction <0:
+		sprite.flip_h = true
 		
+
 	if is_dashing:
+		velocity.x = dash_direction * dash_speed
 		dash_time -= delta
-		if dash_time > 0:
-			velocity.x = dash_direction * dash_speed
-		else:
+		if dash_time <= 0:
 			end_dash()
 	else:
-		#Handle normal walk
-		var direction = Input.get_axis("ui_left", "ui_right")
-		if direction:
+		# Horizontal movement
+		if direction != 0:
 			velocity.x = direction * SPEED
 		else:
-			velocity.x = move_toward(velocity.x, 0, SPEED)
-		# Handle jump.
-		if Input.is_action_just_pressed("ui_up") and is_on_floor():
-			velocity.y = JUMP_VELOCITY
-		#Handle Dash
-		if dash_cd_time > 0:
-			dash_cd_time -= delta
-		if Input.is_action_just_pressed("ui_dash") and dash_cd_time <= 0:
-			start_dash()
+			velocity.x = lerp(velocity.x, 0.0, 0.2)
+
+	velocity.y += gravity * delta
+
+	if Input.is_action_just_pressed("ui_up") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	if dash_cd_time > 0:
+		dash_cd_time -= delta
+	if Input.is_action_just_pressed("ui_dash") and dash_cd_time <= 0:
+		start_dash()
+		# Update attack timer
+	if is_attacking:
+		attack_timer -= delta
+		if attack_timer <= 0:
+			is_attacking = false
+	if is_shooting:
+		shooting_timer -= delta
+		if shooting_timer <= 0:
+			is_shooting = false
 
 	move_and_slide()
 	
 	# Melee attack
 	if Input.is_action_just_pressed("ui_melee"):
-		attack_melee();
-	
-		
+		attack_melee()
 	# Ranged attack
 	if Input.is_action_just_pressed("ui_ranged"):
 		attack_ranged();
+	
+	if is_attacking:
+		sprite.play("melee")
+	elif is_shooting:
+		sprite.play("shooting")
+	elif is_dashing:
+		sprite.play("dash")
+	else:
+		if is_on_floor():
+			if direction == 0:
+				sprite.play("iddle")
+			else:
+				sprite.play("run")	
+		else:
+			sprite.play("jump")
 	
 	# reset combo if too much time has passed
 	if combo_timer > 0:
@@ -89,6 +129,8 @@ func _physics_process(delta):
 #Melee method
 func attack_melee() -> void:
 	var damage = 0;
+	is_attacking = true
+	attack_timer = ATTACK_DURATION
 	
 	if combo_step == 0:
 		damage = damage_melee1
@@ -98,6 +140,8 @@ func attack_melee() -> void:
 		damage = damage_melee3
 	
 	for body in hitbox_melee.get_overlapping_bodies():
+		if body == self:
+			continue 
 		if body.has_method("take_damage"):
 			body.take_damage(damage);
 	
@@ -114,6 +158,9 @@ func attack_melee() -> void:
 func attack_ranged():
 	var proj = projetile_scene.instantiate();
 	get_parent().add_child(proj);
+	
+	is_shooting = true
+	shooting_timer = SHOOTING_DURATION
 	
 	#Define projetile direction
 	var dir = Vector2.RIGHT;
@@ -138,8 +185,28 @@ func start_dash() -> void:
 	if dash_direction == 0:
 		dash_direction = 1
 
-	# Optional: imune during dash?
+	is_invincible = true
 
 func end_dash() -> void:
 	print("Dash ended")
 	is_dashing = false
+	is_invincible = false
+	
+	
+	
+#Health methods
+func take_damage(damage: int):
+	health -= damage
+	health = max(0, health)
+	print("Player took ", damage, " damage. Remaining health: ", health)
+
+	if health <= 0:
+		die()
+
+func heal(amount: int):
+	health += amount
+	health = min(max_health, health)
+
+func die():
+	print("Player died")
+	# aqui podes fazer respawn ou game over

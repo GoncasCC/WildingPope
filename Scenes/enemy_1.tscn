@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://djhk5tw8tqugu"]
+[gd_scene load_steps=6 format=3 uid="uid://djhk5tw8tqugu"]
 
-[ext_resource type="Script" path="res://Scripts/enemy_1.gd" id="1_u8nib"]
+[ext_resource type="Script" uid="uid://dsrikav81b61p" path="res://Scripts/enemy_1.gd" id="1_u8nib"]
+[ext_resource type="PackedScene" uid="uid://dhqk6tahgnljn" path="res://Scenes/enemy_1_projetile.tscn" id="2_0a874"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ruyw1"]
 
@@ -12,6 +13,8 @@ bg_color = Color(0.65185, 0.972594, 0.139664, 1)
 
 [node name="Enemy1" type="CharacterBody2D"]
 script = ExtResource("1_u8nib")
+max_health = 59
+projectile_scene = ExtResource("2_0a874")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(1, 2)

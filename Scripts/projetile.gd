@@ -5,6 +5,8 @@ extends Area2D
 
 var direction : Vector2 = Vector2.RIGHT;
 
+var shooter: Node = null
+
 func _process(delta):
 	position += direction * speed * delta;
 	

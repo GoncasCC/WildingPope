@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhqk6tahgnljn"]
+
+[ext_resource type="Script" uid="uid://dalugrvpd4qw1" path="res://Scripts/enemy_1_projetile.gd" id="1_0uncp"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_o0jeq"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0uncp"]
+size = Vector2(20, 17)
+
+[node name="enemy1_projetile" type="Area2D"]
+script = ExtResource("1_0uncp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-2, -4.76837e-07)
+scale = Vector2(20.25, 18.25)
+texture = SubResource("PlaceholderTexture2D_o0jeq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, -0.5)
+shape = SubResource("RectangleShape2D_0uncp")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
